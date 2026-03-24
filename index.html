@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>숨겨진 부자 본능 테스트 | 똑생 x 예언냥</title>
+<meta property="og:title" content="숨겨진 부자 본능 테스트 | 똑생 x 예언냥">
+<meta property="og:description" content="고양이가 10년 뒤 내 통장 잔고를 봤다...😐 나는 어떤 집사 유형?">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#B2C7D9;font-family:'Noto Sans KR',sans-serif}
+body{display:flex;justify-content:center;align-items:flex-start}
+.phone{width:100%;max-width:480px;min-height:100vh;min-height:100dvh;background:#B2C7D9;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.status-bar{background:rgba(0,0,0,.12);padding:6px 16px 4px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.status-time{font-size:12px;font-weight:700;color:#fff}
+.status-icons{display:flex;align-items:center;gap:5px}
+.status-icons svg{fill:#fff}
+.kk-header{background:rgba(178,199,217,.97);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:.5px solid rgba(0,0,0,.08)}
+.kk-header-icon{font-size:20px;color:#333;cursor:pointer;width:28px;text-align:center;font-weight:300}
+.kk-header-center{text-align:center}
+.kk-header-title{font-size:15px;font-weight:700;color:#111}
+.kk-header-sub{font-size:11px;color:#555;margin-top:1px}
+.kk-header-right{display:flex;gap:10px;align-items:center}
+.kk-header-right span{font-size:18px;color:#333;cursor:pointer}
+.chat-area{flex:1;overflow-y:auto;padding:12px 12px 8px;display:flex;flex-direction:column;gap:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chat-area::-webkit-scrollbar{display:none}
+.date-divider{text-align:center;margin:10px 0 6px}
+.date-divider span{font-size:11px;color:#555;background:rgba(0,0,0,.12);padding:3px 12px;border-radius:20px}
+.msg-row-cat{display:flex;align-items:flex-start;gap:7px;margin-bottom:4px}
+.cat-profile{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.cat-msg-col{display:flex;flex-direction:column;max-width:68%}
+.cat-name{font-size:11px;color:#333;margin-bottom:3px;font-weight:500}
+.cat-bubble-row{display:flex;align-items:flex-end;gap:4px}
+.bubble-cat{background:#fff;border-radius:0 12px 12px 12px;padding:9px 12px;font-size:14px;line-height:1.55;color:#111;position:relative;word-break:keep-all}
+.bubble-cat::before{content:'';position:absolute;top:0;left:-7px;width:0;height:0;border-top:8px solid #fff;border-left:7px solid transparent}
+.msg-time{font-size:10px;color:rgba(0,0,0,.4);flex-shrink:0;margin-bottom:2px}
+.msg-row-user{display:flex;justify-content:flex-end;align-items:flex-end;gap:4px;margin-bottom:4px}
+.bubble-user{background:#FEE500;border-radius:12px 0 12px 12px;padding:9px 12px;font-size:14px;line-height:1.55;color:#111;max-width:68%;word-break:keep-all;position:relative}
+.bubble-user::after{content:'';position:absolute;top:0;right:-7px;width:0;height:0;border-top:8px solid #FEE500;border-right:7px solid transparent}
+.typing-row-cat{display:flex;align-items:flex-start;gap:7px;margin-bottom:4px}
+.typing-bubble{background:#fff;border-radius:0 12px 12px 12px;padding:10px 14px;display:flex;gap:4px;align-items:center;position:relative}
+.typing-bubble::before{content:'';position:absolute;top:0;left:-7px;width:0;height:0;border-top:8px solid #fff;border-left:7px solid transparent}
+.dot-t{width:7px;height:7px;border-radius:50%;background:#bbb;animation:blink 1.2s infinite}
+.dot-t:nth-child(2){animation-delay:.2s}
+.dot-t:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.3;transform:scale(1)}40%{opacity:1;transform:scale(1.2)}}
+.choice-area{background:rgba(178,199,217,.6);padding:8px 10px;flex-shrink:0;border-top:.5px solid rgba(0,0,0,.1)}
+.choice-area-inner{display:flex;flex-direction:column;gap:6px}
+.choice-btn{background:#fff;border:none;border-radius:20px;padding:11px 16px;font-size:14px;color:#222;cursor:pointer;text-align:left;line-height:1.45;font-family:'Noto Sans KR',sans-serif;transition:background .15s;width:100%}
+.choice-btn:active{background:#f0f0f0}
+.choice-btn.picked{background:#FEE500;color:#111}
+.nyang-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:100;padding:1.25rem}
+.nyang-box{background:#fff;border-radius:16px;padding:1.75rem 1.5rem 1.5rem;width:100%;max-width:300px;text-align:center}
+.nyang-emoji{font-size:36px;margin-bottom:.5rem}
+.nyang-title{font-size:15px;font-weight:700;color:#111;line-height:1.55;margin-bottom:.3rem}
+.nyang-sub{font-size:12px;color:#888;margin-bottom:1.1rem}
+.nyang-input{width:100%;border:1.5px solid #ddd;border-radius:10px;padding:11px 14px;font-size:16px;text-align:center;color:#111;font-family:'Noto Sans KR',sans-serif;margin-bottom:.75rem;outline:none;letter-spacing:.06em}
+.nyang-input:focus{border-color:#FEE500}
+.nyang-confirm{width:100%;background:#FEE500;color:#111;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-bottom:8px}
+.nyang-shortcut{width:100%;background:#f5f5f5;color:#555;border:none;border-radius:10px;padding:11px;font-size:13px;cursor:pointer;font-family:'Noto Sans KR',sans-serif}
+.nyang-hint{font-size:12px;color:#e74c3c;margin-top:.5rem;min-height:1.2em}
+.shake{animation:shake .35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}60%{transform:translateX(7px)}80%{transform:translateX(-4px)}}
+.result-view{position:absolute;top:0;left:0;right:0;bottom:0;background:#FAFAFA;overflow-y:auto;display:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.result-view::-webkit-scrollbar{display:none}
+.result-view.show{display:block}
+.rv-header{background:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:.5px solid #eee;position:sticky;top:0;z-index:10}
+.rv-header-title{font-size:13px;color:#888}
+.rv-close{font-size:20px;color:#555;cursor:pointer;background:none;border:none;font-family:'Noto Sans KR',sans-serif}
+.rv-body{padding:0 0 2rem}
+.rv-hero{padding:2rem 1.5rem 1.5rem;text-align:center;background:#fff;margin-bottom:8px}
+.rv-avatar{width:90px;height:90px;border-radius:50%;background:#f0f0f0;border:2px solid #eee;display:flex;align-items:center;justify-content:center;margin:0 auto .875rem}
+.rv-sub{font-size:12px;color:#999;margin-bottom:.25rem}
+.rv-name{font-size:22px;font-weight:700;color:#111;margin-bottom:.2rem}
+.rv-eng{font-size:13px;color:#aaa}
+.rv-section{background:#fff;margin-bottom:8px;padding:1.25rem 1.5rem}
+.rv-sec-label{font-size:11px;font-weight:700;color:#aaa;letter-spacing:.06em;margin-bottom:.6rem}
+.rv-sec-body{font-size:14px;color:#333;line-height:1.75}
+.rv-prophecy{background:#FFF9C4;margin-bottom:8px;padding:1.25rem 1.5rem;border-left:3px solid #FEE500}
+.rv-tips{background:#fff;margin-bottom:8px;padding:1.25rem 1.5rem}
+.rv-tip-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:.5px solid #f0f0f0;font-size:14px;color:#333;line-height:1.6}
+.rv-tip-row:last-child{border-bottom:none}
+.rv-tip-dot{width:5px;height:5px;border-radius:50%;background:#ccc;flex-shrink:0;margin-top:8px}
+.rv-partner{background:#fff;margin-bottom:8px;padding:1.25rem 1.5rem}
+.rv-partner-inner{display:flex;align-items:center;gap:12px;margin-top:.5rem}
+.rv-partner-av{width:46px;height:46px;border-radius:50%;background:#f0f0f0;border:.5px solid #eee;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rv-partner-name{font-size:14px;font-weight:500;color:#111;margin-bottom:.15rem}
+.rv-partner-desc{font-size:12px;color:#aaa}
+.rv-cta{padding:1rem 1.5rem 1.5rem;background:#fff;margin-bottom:8px}
+.rv-cta-btn{display:block;width:100%;background:#FEE500;color:#111;border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:700;text-align:center;text-decoration:none;font-family:'Noto Sans KR',sans-serif;cursor:pointer;margin-bottom:10px}
+.rv-share-row{display:flex;gap:8px}
+.rv-share-btn{flex:1;background:#f5f5f5;border:none;border-radius:10px;padding:11px 6px;font-size:13px;color:#555;cursor:pointer;text-align:center;line-height:1.4;font-family:'Noto Sans KR',sans-serif}
+.prog-wrap{height:2px;background:rgba(0,0,0,.1);flex-shrink:0}
+.prog-fill{height:2px;background:#FEE500;transition:width .4s ease}
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+<svg style="display:none">
+  <symbol id="cat-base" viewBox="0 0 60 60"><circle cx="30" cy="32" r="22" fill="none" stroke="#333" stroke-width="1.8"/><path d="M12 22 L16 30 L20 22Z" fill="#333"/><path d="M40 22 L44 30 L48 22Z" fill="#333"/><line x1="16" y1="38" x2="9" y2="36" stroke="#333" stroke-width="1.3"/><line x1="16" y1="41" x2="9" y2="41" stroke="#333" stroke-width="1.3"/><line x1="44" y1="38" x2="51" y2="36" stroke="#333" stroke-width="1.3"/><line x1="44" y1="41" x2="51" y2="41" stroke="#333" stroke-width="1.3"/></symbol>
+  <symbol id="cat-cool" viewBox="0 0 60 60"><use href="#cat-base"/><rect x="17" y="29" width="26" height="7" rx="3.5" fill="#333"/><circle cx="23" cy="32.5" r="2.2" fill="#fff"/><circle cx="37" cy="32.5" r="2.2" fill="#fff"/><path d="M24 42 Q30 47 36 42" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="cat-yolo" viewBox="0 0 60 60"><use href="#cat-base"/><circle cx="23" cy="32" r="4.5" fill="none" stroke="#333" stroke-width="1.8"/><circle cx="37" cy="32" r="4.5" fill="none" stroke="#333" stroke-width="1.8"/><circle cx="23" cy="32" r="2" fill="#333"/><circle cx="37" cy="32" r="2" fill="#333"/><path d="M24 43 Q30 48 36 43" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"/><path d="M22 24 Q30 20 38 24" fill="none" stroke="#333" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="cat-safe" viewBox="0 0 60 60"><use href="#cat-base"/><path d="M19 30 Q22 26 26 28" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/><path d="M34 28 Q38 26 41 30" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/><circle cx="23" cy="33" r="2.5" fill="#333"/><circle cx="37" cy="33" r="2.5" fill="#333"/><path d="M26 41 Q30 39 34 41" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/><rect x="25" y="44" width="10" height="7" rx="2" fill="none" stroke="#333" stroke-width="1.5"/><circle cx="30" cy="46" r="1.2" fill="#333"/><line x1="30" y1="47" x2="30" y2="50" stroke="#333" stroke-width="1.3"/></symbol>
+  <symbol id="cat-rich" viewBox="0 0 60 60"><use href="#cat-base"/><circle cx="23" cy="32" r="3.5" fill="#333"/><circle cx="37" cy="32" r="3.5" fill="#333"/><path d="M23 42 Q30 48 37 42" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"/><path d="M24 22 L30 15 L36 22" fill="none" stroke="#333" stroke-width="1.8" stroke-linejoin="round"/><path d="M22 22 L38 22" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="cat-hogu" viewBox="0 0 60 60"><use href="#cat-base"/><path d="M20 28 Q23 32 26 28" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/><path d="M34 28 Q37 32 40 28" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/><circle cx="23" cy="33" r="2.5" fill="#333"/><circle cx="37" cy="33" r="2.5" fill="#333"/><path d="M24 43 Q30 40 36 43" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/><path d="M22 46 Q30 50 38 46" fill="none" stroke="#333" stroke-width="1.3" stroke-linecap="round"/><path d="M38 30 L46 24" stroke="#333" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="48" cy="22" rx="5" ry="4" fill="none" stroke="#333" stroke-width="1.5"/><path d="M45 20 L51 24M45 24 L51 20" stroke="#333" stroke-width="1.3" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="status-bar">
+  <div class="status-time" id="status-time">오후 4:20</div>
+  <div class="status-icons">
+    <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="3" width="3" height="8" rx="1"/><rect x="4.5" y="2" width="3" height="9" rx="1"/><rect x="9" y="0" width="3" height="11" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1" opacity=".3"/></svg>
+    <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 2.5C4 2.5 1 5 0 7C2.5 4.5 5 3.5 7.5 3.5C10 3.5 12.5 4.5 15 7C14 5 11 2.5 7.5 2.5Z"/><path d="M7.5 5C5.5 5 3.5 6 2 8C3.5 6.5 5.5 6 7.5 6C9.5 6 11.5 6.5 13 8C11.5 6 9.5 5 7.5 5Z"/><circle cx="7.5" cy="9.5" r="1.5"/></svg>
+    <svg width="24" height="11" viewBox="0 0 24 11"><rect x="0" y="1" width="20" height="9" rx="2" fill="none" stroke="#fff" stroke-width="1.2"/><rect x="21.5" y="3.5" width="2" height="4" rx="1"/><rect x="1.5" y="2.5" width="15" height="6" rx="1"/></svg>
+  </div>
+</div>
+
+<div class="kk-header">
+  <div class="kk-header-icon">‹</div>
+  <div class="kk-header-center">
+    <div class="kk-header-title">예언냥 재테크 연구소</div>
+    <div class="kk-header-sub">똑생 x 예언냥</div>
+  </div>
+  <div class="kk-header-right"><span>🔍</span><span>☰</span></div>
+</div>
+
+<div class="prog-wrap"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+
+<div class="chat-area" id="chat-area">
+  <div class="date-divider"><span>오늘</span></div>
+</div>
+
+<div class="choice-area" id="choice-area" style="display:none">
+  <div class="choice-area-inner" id="choice-inner"></div>
+</div>
+
+<div class="nyang-overlay" id="nyang-overlay" style="display:none">
+  <div class="nyang-box" id="nyang-box">
+    <div class="nyang-emoji">🐱</div>
+    <div class="nyang-title">이 다음 얘기가 궁금하다면<br><b>"냐냐냥!!!!"</b>을 입력하세요 😃</div>
+    <div class="nyang-sub">이 외의 답변은 거절로 인식됩니다</div>
+    <input class="nyang-input" id="nyang-input" placeholder="냐냐냥!!!!" maxlength="12" autocomplete="off"/>
+    <button class="nyang-confirm" onclick="checkNyang()">입력 완료</button>
+    <button class="nyang-shortcut" onclick="shortcutNyang()">냐냐냥!!!! 버튼 (자동 입력)</button>
+    <div class="nyang-hint" id="nyang-hint"></div>
+  </div>
+</div>
+
+<div class="result-view" id="result-view">
+  <div class="rv-header">
+    <div class="rv-header-title">똑생 x 예언냥</div>
+    <button class="rv-close" onclick="restart()">✕</button>
+  </div>
+  <div class="rv-body" id="rv-body"></div>
+</div>
+
+</div>
+
+<script>
+const DDOK_URL='https://www.ddok.life/?utm_source=google&utm_medium=cpc&utm_campaign=ddoklife_total&utm_term=brand&utm_content=%EB%98%91%EC%83%9D&gcl_keyword=%EB%98%91%EC%83%9D&gcl_network=g&gad_source=1&gad_campaignid=20277449500&gbraid=0AAAAApxLgDL8rsYLwg0kwlrioNUBwAbF3&gclid=Cj0KCQiAhaHMBhD2ARIsAPAU_D415c43zhSRoeQ_ZAdvpxIFDEn7fT51LRAHL0GSfkAvp8WJOyf2GywaAi_jEALw_wcB';
+function getTime(){const d=new Date();let h=d.getHours(),m=d.getMinutes(),ap=h>=12?'오후':'오전';h=h%12||12;return `${ap} ${h}:${String(m).padStart(2,'0')}`;}
+document.getElementById('status-time').textContent=getTime();
+setInterval(()=>document.getElementById('status-time').textContent=getTime(),30000);
+const QS=[
+  {cat:["야, 어제 현관 앞에 택배 박스 또 쌓여있더라? 츄르는 아니던데. 👀"],choices:["아니.. 그건 진짜 필요해서 산 거야!","스트레스받아서 나도 모르게 질렀어.."],scores:[{S:1},{C:1}]},
+  {cat:["너 근데 통장에 돈은 있냥?","나중에 나 츄르 트럭으로 사줄 수 있어? 😏"],choices:["걱정 마! 한 방 터지면 공장을 사줄게.","조금씩 모으고 있어.. 티끌 모아 태산 몰라?"],scores:[{T:2},{S:1}]},
+  {cat:["만약에 갑자기 급전 필요하면 어떡할 거야?","나 팔아먹을 거 아니지? 😾"],choices:["친구야 도와줘!! ㅠㅠ","조용히 비상금 대출 앱을 켠다.."],scores:[{F:1,T:1},{A:1}]},
+  {cat:["참, 친구 냥이가 '빚도 능력이다'라면서","츄르 풀로 땡겨서 캣닙 방석 샀대. 나도 할까냥? 🛋"],choices:["능력이지! 나도 대출 땡겨서 집 살까봐.","무서워... 이자 갚다가 츄르는 구경도 못할 수도 있어, 너!"],scores:[{C:1,F:2},{S:1}]},
+  {cat:["앞집 집사가 \"좋은 투자처 있다\"고 했대.","수익률이 월 20%라던데? 🤑"],choices:["어디야!? 나도 넣을래! 바로 돈 챙긴다.","월 20%? 사기 냄새 난다. 무시한다."],scores:[{T:2},{K:1}]},
+  {cat:["오, 근데 방금 바람에 실려온 5만 원 잡았어!","이거 어떻게 할 거냥? 💸"],choices:["오늘 저녁은 치킨이다!","혹시 모르니 비상금 통장에 넣어둔다."],scores:[{C:1},{S:1,K:1}]},
+  {cat:["이번 달 카드값 고지서 날아왔던데..","집사 표정이 왜 그래? 🙃"],choices:["어? 이게 내가 쓴 거라고? 해킹당한 거 아냐?","하.. 이번 달은 숨만 쉬고 살아야겠다.."],scores:[{F:1,C:1},{A:1}]},
+  {cat:["솔직히 말해봐.","너 지금 당장 100만 원 없어서 큰일 나면 어떡할래? 🐱"],choices:["어떻게든 되겠지 뭐..","뭐라도 팔아서 메꿔야지!"],scores:[{F:1},{A:1}]},
+  {cat:["흐음..","너 돈 관리하는 모냥새 보니까 미래가 딱 보인다.","10년 뒤 네 통장 잔고랑, 위기 탈출 비법 알려줄까?","근데 공짜로는 안 돼. 집사라면 이정도는 할 수 있겠지? 😏"],choices:null,isNyang:true}
+];
+const TYPES=[
+  {sym:"cat-hogu",subType:"귀가 얇은",name:"팔랑귀 집사",eng:"남의 말을 잘 믿는 순수한 유형",diag:"우리 집사는 마음이 너무 여려... 남의 말을 너무 잘 믿는다냥 😿\n친구 돕는 것도 좋고 투자도 좋지만, 그러다 내 츄르값까지 다 퍼줄까 봐 걱정돼.\n가끔은 '싫어!'라고 거절하는 연습도 좀 해라냥!",prophecy:"보증 잘못 서서 남의 빚 갚고 있거나, '대박 정보' 믿고 산 주식이 상폐 됐을 확률이 높다냥!! 통장 잔고가 마이너스만 아니면 다행이다냥.",tips:["사람을 너무 믿어서 곤란해질 때가 있지?","거절 못 해서 돈 빌려줬다가 떼이거나, 좋다는 말만 믿고 투자했다가 후회한 적 있지 않냥?","혹시 사기를 당하거나 투자가 잘못돼도 너무 자책하지 마.","'다시 일어설 기회'는 누구에게나 열려 있어. 실수해도 괜찮아!"],partnerSym:"cat-safe",partnerName:"철벽 방어 쫄보 집사",partnerDesc:"네 돈을 지켜줄게!"},
+  {sym:"cat-yolo",subType:"오늘만 사는",name:"욜로 집사",eng:"소비 요정 유형",diag:"인생 뭐 있어? 즐거우면 그만이지! 😼\n근데 집사야, 카드값 고지서 볼 때마다 심장이 쫄깃하지 않냥?\n'어떻게든 되겠지' 하고 넘기면 난 나중에 굶으라는 거냥...",prophecy:"빚 독촉 전화 받느라 핸드폰 꺼두고 도망 다닐까 무섭다냥!!! 그럼 그때 나는 어떡하냥? 😿",tips:["지금 행복한 건 좋은데, 감당 못 할 짐은 지지 않도록 조심해!","월급 들어오자마자 카드값으로 '퍼가요~♡' 당해서 또 빈털터리 된 거 아니냥?","혹시라도 빚 때문에 숨이 턱 막힐 땐 도망가지 말고 도움을 청해.","빚을 멈춰주는 '리셋 버튼'이 있다는 거, 너만 알고 있어라냥!"],partnerSym:"cat-rich",partnerName:"척척박사 솔로몬 집사",partnerDesc:"널 말려줄 친구가 필요해!"},
+  {sym:"cat-safe",subType:"철벽 방어",name:"쫄보 집사",eng:"안전 제일주의 유형",diag:"안전한 게 최고지... 근데 너무 쫄지는 마라냥 🐹\n성실한 건 아주 칭찬해! 하지만 금융이나 제도를 활용할 줄 모르면 기회를 놓친다냥!\n구더기 무서워서 장 못 담그면 맛있는 걸 못 먹는다구.",prophecy:"굶어 죽진 않겠지만, 벼락부자도 아닌 것 같다냥... 물가는 오르는데 월급은 비슷하면, 통장 보면서 한숨 쉬고 있을지도 몰라.",tips:["살다 보면 어쩔 수 없이 빚을 질 수도 있어.","대출 문자만 봐도 기겁하고, 10원이라도 손해 볼까 봐 벌벌 떨며 살진 않았냥?","실패해도 '나라에서 받쳐주는 안전망'이 있다는 걸 기억해.","안전벨트가 튼튼하다는 걸 알면, 운전할 때 덜 무섭지 않겠어?"],partnerSym:"cat-hogu",partnerName:"귀가 얇은 팔랑귀 집사",partnerDesc:"네 신중함을 나눠줘!"},
+  {sym:"cat-rich",subType:"척척박사",name:"솔로몬 집사",eng:"금융 지식 만렙 유형",diag:"오... 제법인데? 넌 내가 잔소리할 게 없다냥 😎\n돈 관리도 철저하고 위기 대처도 빨라. 넌 나중에 츄르 공장 사장이 될 관상이야.\n하지만 너무 자만하면 원숭이도 나무에서 떨어지니 조심!",prophecy:"큰 이변이 없는 한 건물주가 되어 나에게 최고급 캣타워를 선물할 관상이다냥. 통장에 '0'이 너무 많아서 세기도 힘들겠는데?",tips:["똑똑한 집사는 이미 알고 있겠지?","너는 빚도 전략적으로 잘 쓰잖아? 그치만 가끔은 그 자신감이 독이 될 때가 있다는 것도 명심해야 한다냥.","법은 사람을 벌주려고 있는 게 아니라, 구해주려고(개인회생 등) 있는 거야.","주변에 힘들어하는 친구가 있다면 네가 이 '법적 비상구'를 꼭 알려줘라냥."],partnerSym:"cat-yolo",partnerName:"오늘만 사는 욜로 집사",partnerDesc:"너의 계획성이 필요해!"}
+];
+let scores={C:0,S:0,K:0,A:0,F:0,T:0},qIdx=0;
+function catSVGsmall(){return `<svg width="30" height="30" viewBox="0 0 60 60"><use href="#cat-cool"/></svg>`;}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function scrollToBottom(){
+  const ca=document.getElementById('chat-area');
+  ca.scrollTop=ca.scrollHeight;
+  // 선택지 버튼 포함해서 전체 phone div 기준으로도 스크롤
+  setTimeout(()=>{ca.scrollTop=ca.scrollHeight;},50);
+}
+function scrollLastMsgIntoView(){
+  const ca=document.getElementById('chat-area');
+  const last=ca.lastElementChild;
+  if(last) last.scrollIntoView({behavior:'smooth',block:'end'});
+}
+function addCatMsg(text){
+  const ca=document.getElementById('chat-area'),t=getTime();
+  const row=document.createElement('div');row.className='msg-row-cat';
+  row.innerHTML=`<div class="cat-profile">${catSVGsmall()}</div><div class="cat-msg-col"><div class="cat-name">예언냥</div><div class="cat-bubble-row"><div class="bubble-cat">${text.split('\n').join('<br>')}</div><div class="msg-time">${t}</div></div></div>`;
+  ca.appendChild(row);
+  setTimeout(()=>scrollToBottom(),30);
+}
+function addUserMsg(text){
+  const ca=document.getElementById('chat-area'),t=getTime();
+  const row=document.createElement('div');row.className='msg-row-user';
+  row.innerHTML=`<div class="msg-time">${t}</div><div class="bubble-user">${text}</div>`;
+  ca.appendChild(row);
+  setTimeout(()=>scrollToBottom(),30);
+}
+function showTyping(){
+  const ca=document.getElementById('chat-area');
+  const row=document.createElement('div');row.className='typing-row-cat';row.id='typing-r';
+  row.innerHTML=`<div class="cat-profile">${catSVGsmall()}</div><div class="typing-bubble"><div class="dot-t"></div><div class="dot-t"></div><div class="dot-t"></div></div>`;
+  ca.appendChild(row);
+  setTimeout(()=>scrollToBottom(),30);
+}
+function removeTyping(){const t=document.getElementById('typing-r');if(t)t.remove();}
+async function runQ(idx){
+  document.getElementById('choice-area').style.display='none';
+  document.getElementById('prog').style.width=((idx/QS.length)*100)+'%';
+  const q=QS[idx];
+  for(let i=0;i<q.cat.length;i++){
+    showTyping();await sleep(i===0?600:400);removeTyping();addCatMsg(q.cat[i]);
+    if(i<q.cat.length-1)await sleep(300);
+  }
+  if(q.isNyang){await sleep(800);document.getElementById('nyang-overlay').style.display='flex';return;}
+  await sleep(300);showChoices(idx,q);
+}
+function showChoices(idx,q){
+  const ci=document.getElementById('choice-inner');ci.innerHTML='';
+  q.choices.forEach((c,i)=>{
+    const b=document.createElement('button');b.className='choice-btn';b.textContent=c;
+    b.onclick=()=>pick(idx,i,c,b);ci.appendChild(b);
+  });
+  document.getElementById('choice-area').style.display='block';
+  setTimeout(()=>scrollToBottom(),60);
+}
+async function pick(idx,i,text,btn){
+  document.querySelectorAll('.choice-btn').forEach(b=>{b.disabled=true;b.style.opacity='.5'});
+  btn.style.opacity='1';btn.classList.add('picked');
+  document.getElementById('choice-area').style.display='none';
+  const s=QS[idx].scores[i];Object.keys(s).forEach(k=>scores[k]=(scores[k]||0)+s[k]);
+  addUserMsg(text);qIdx=idx+1;
+  if(qIdx<QS.length)await sleep(500),runQ(qIdx);
+}
+function checkNyang(){
+  const v=document.getElementById('nyang-input').value;
+  const clean=v.replace(/\s/g,'').replace(/!/g,'');
+  if(clean==='냐냐냥'||v.replace(/\s/g,'')===('냐냐냥!!!!')){doNyang();}
+  else{
+    const box=document.getElementById('nyang-box');
+    box.classList.remove('shake');void box.offsetWidth;box.classList.add('shake');
+    document.getElementById('nyang-hint').textContent='냐냐냥!!!! 이라고 정확히 입력해야 해냥 😾';
+    document.getElementById('nyang-input').value='';
+  }
+}
+function shortcutNyang(){document.getElementById('nyang-input').value='냐냐냥!!!!';setTimeout(()=>checkNyang(),150);}
+async function doNyang(){
+  document.getElementById('nyang-overlay').style.display='none';
+  addUserMsg('냐냐냥!!!!');await sleep(500);
+  showTyping();await sleep(900);removeTyping();
+  addCatMsg('오케이 집사..\n이 정도면 결과 알려줄 자격 있다냥 😼');
+  await sleep(1200);showResult();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('nyang-overlay').style.display!=='none')checkNyang();});
+function calcType(){
+  if(scores.T>=3&&scores.K<=1)return 0;
+  if(scores.K+scores.A>=4)return 3;
+  if(scores.S>=2&&scores.F<=1)return 2;
+  return 1;
+}
+function showResult(){
+  document.getElementById('prog').style.width='100%';
+  const t=TYPES[calcType()];
+  const tipsHtml=t.tips.map(tp=>`<div class="rv-tip-row"><div class="rv-tip-dot"></div><div>${tp}</div></div>`).join('');
+  document.getElementById('rv-body').innerHTML=`
+    <div class="rv-hero"><div class="rv-avatar"><svg width="80" height="80" viewBox="0 0 60 60"><use href="#${t.sym}"/></svg></div><div class="rv-sub">${t.subType}</div><div class="rv-name">"${t.name}"</div><div class="rv-eng">${t.eng}</div></div>
+    <div class="rv-section"><div class="rv-sec-label">냥이의 진단</div><div class="rv-sec-body">${t.diag.split('\n').join('<br>')}</div></div>
+    <div class="rv-prophecy"><div class="rv-sec-label">🔮 이대로면? 10년 뒤 예언</div><div class="rv-sec-body">${t.prophecy}</div></div>
+    <div class="rv-tips"><div class="rv-sec-label">비밀 치트키 (히든 루트)</div>${tipsHtml}</div>
+    <div class="rv-partner"><div class="rv-sec-label">💖 환상의 짝꿍</div><div class="rv-partner-inner"><div class="rv-partner-av"><svg width="36" height="36" viewBox="0 0 60 60"><use href="#${t.partnerSym}"/></svg></div><div><div class="rv-partner-name">${t.partnerName}</div><div class="rv-partner-desc">${t.partnerDesc}</div></div></div></div>
+    <div class="rv-cta"><a class="rv-cta-btn" href="${DDOK_URL}" target="_blank">고양이가 말한 히든 루트 진짜로 확인하기 ↗</a><div class="rv-share-row"><button class="rv-share-btn" onclick="if(navigator.share){navigator.share({title:'숨겨진 부자 본능 테스트',text:'나는 ${t.name} 나왔어! 너는?',url:window.location.href})}">친구한테<br>냐냐냥 시키러 가기</button><button class="rv-share-btn" onclick="restart()">테스트<br>다시 하기</button></div></div>`;
+  document.getElementById('result-view').classList.add('show');
+  document.getElementById('result-view').scrollTop=0;
+}
+function restart(){
+  scores={C:0,S:0,K:0,A:0,F:0,T:0};qIdx=0;
+  document.getElementById('chat-area').innerHTML='<div class="date-divider"><span>오늘</span></div>';
+  document.getElementById('choice-area').style.display='none';
+  document.getElementById('nyang-input').value='';
+  document.getElementById('nyang-hint').textContent='';
+  document.getElementById('result-view').classList.remove('show');
+  document.getElementById('prog').style.width='0%';
+  setTimeout(()=>runQ(0),400);
+}
+runQ(0);
+</script>
+</body>
+</html>
