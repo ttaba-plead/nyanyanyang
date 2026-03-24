@@ -51,7 +51,7 @@ body{display:flex;justify-content:center;align-items:flex-start}
 .choice-btn{background:#fff;border:none;border-radius:20px;padding:11px 16px;font-size:14px;color:#222;cursor:pointer;text-align:left;line-height:1.45;font-family:'Noto Sans KR',sans-serif;transition:background .15s;width:100%;max-width:82%}
 .choice-btn:active{background:#f0f0f0}
 .choice-btn.picked{background:#FEE500;color:#111}
-.nyang-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:100;padding:1.25rem}
+.nyang-overlay{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;bottom:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:100;padding:1.25rem}
 .nyang-box{background:#fff;border-radius:16px;padding:1.75rem 1.5rem 1.5rem;width:100%;max-width:300px;text-align:center}
 .nyang-emoji{font-size:36px;margin-bottom:.5rem}
 .nyang-title{font-size:15px;font-weight:700;color:#111;line-height:1.55;margin-bottom:.3rem}
@@ -63,7 +63,7 @@ body{display:flex;justify-content:center;align-items:flex-start}
 .nyang-hint{font-size:12px;color:#e74c3c;margin-top:.5rem;min-height:1.2em}
 .shake{animation:shake .35s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}60%{transform:translateX(7px)}80%{transform:translateX(-4px)}}
-.result-view{position:absolute;top:0;left:0;right:0;bottom:0;background:#FAFAFA;overflow-y:auto;display:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.result-view{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;bottom:0;background:#FAFAFA;overflow-y:auto;display:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .result-view::-webkit-scrollbar{display:none}
 .result-view.show{display:block}
 .rv-header{background:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:.5px solid #eee;position:sticky;top:0;z-index:10}
@@ -228,7 +228,13 @@ async function runQ(idx){
     showTyping();await sleep(i===0?600:400);removeTyping();addCatMsg(q.cat[i]);
     if(i<q.cat.length-1)await sleep(300);
   }
-  if(q.isNyang){await sleep(800);document.getElementById('nyang-overlay').style.display='flex';return;}
+  if(q.isNyang){
+    await sleep(400);
+    scrollToBottom();
+    await sleep(600);
+    document.getElementById('nyang-overlay').style.display='flex';
+    return;
+  }
   await sleep(300);showChoices(idx,q);
 }
 function showChoices(idx,q){
