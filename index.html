@@ -129,6 +129,7 @@ body{display:flex;justify-content:center;align-items:flex-start}
 
 <div class="chat-area" id="chat-area">
   <div class="date-divider"><span>오늘</span></div>
+  <div id="scroll-anchor" style="height:1px;flex-shrink:0"></div>
 </div>
 
 
@@ -181,15 +182,20 @@ let scores={C:0,S:0,K:0,A:0,F:0,T:0},qIdx=0;
 function catSVGsmall(){return `<svg width="30" height="30" viewBox="0 0 60 60"><use href="#cat-cool"/></svg>`;}
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 function scrollToBottom(){
+  const anchor=document.getElementById('scroll-anchor');
+  if(anchor){
+    anchor.scrollIntoView({behavior:'auto',block:'end'});
+  }
+  // fallback
   const ca=document.getElementById('chat-area');
   ca.scrollTop=ca.scrollHeight;
-  setTimeout(()=>{ca.scrollTop=ca.scrollHeight;},80);
 }
 function addCatMsg(text){
   const ca=document.getElementById('chat-area'),t=getTime();
   const row=document.createElement('div');row.className='msg-row-cat';
   row.innerHTML=`<div class="cat-profile">${catSVGsmall()}</div><div class="cat-msg-col"><div class="cat-name">예언냥</div><div class="cat-bubble-row"><div class="bubble-cat">${text.split('\n').join('<br>')}</div><div class="msg-time">${t}</div></div></div>`;
   ca.appendChild(row);
+  keepAnchorLast();
   scrollToBottom();
 }
 function addUserMsg(text){
@@ -197,6 +203,7 @@ function addUserMsg(text){
   const row=document.createElement('div');row.className='msg-row-user';
   row.innerHTML=`<div class="msg-time">${t}</div><div class="bubble-user">${text}</div>`;
   ca.appendChild(row);
+  keepAnchorLast();
   scrollToBottom();
 }
 function showTyping(){
@@ -204,9 +211,15 @@ function showTyping(){
   const row=document.createElement('div');row.className='typing-row-cat';row.id='typing-r';
   row.innerHTML=`<div class="cat-profile">${catSVGsmall()}</div><div class="typing-bubble"><div class="dot-t"></div><div class="dot-t"></div><div class="dot-t"></div></div>`;
   ca.appendChild(row);
+  keepAnchorLast();
   scrollToBottom();
 }
 function removeTyping(){const t=document.getElementById('typing-r');if(t)t.remove();}
+function keepAnchorLast(){
+  const ca=document.getElementById('chat-area');
+  const anchor=document.getElementById('scroll-anchor');
+  if(anchor&&ca.lastElementChild!==anchor){ca.appendChild(anchor);}
+}
 async function runQ(idx){
   const ic=document.getElementById('inline-choices');if(ic)ic.remove();
   document.getElementById('prog').style.width=((idx/QS.length)*100)+'%';
@@ -231,7 +244,8 @@ function showChoices(idx,q){
     b.onclick=()=>pick(idx,i,c,b);wrap.appendChild(b);
   });
   ca.appendChild(wrap);
-  setTimeout(()=>scrollToBottom(),60);
+  keepAnchorLast();
+  setTimeout(()=>scrollToBottom(),100);
 }
 async function pick(idx,i,text,btn){
   document.querySelectorAll('.choice-btn').forEach(b=>{b.disabled=true;b.style.opacity='.5'});
@@ -283,7 +297,7 @@ function showResult(){
 }
 function restart(){
   scores={C:0,S:0,K:0,A:0,F:0,T:0};qIdx=0;
-  document.getElementById('chat-area').innerHTML='<div class="date-divider"><span>오늘</span></div>';
+  document.getElementById('chat-area').innerHTML='<div class="date-divider"><span>오늘</span></div><div id="scroll-anchor" style="height:1px;flex-shrink:0"></div>';
   const ic=document.getElementById('inline-choices');if(ic)ic.remove();
   document.getElementById('nyang-input').value='';
   document.getElementById('nyang-hint').textContent='';
