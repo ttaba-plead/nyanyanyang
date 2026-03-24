@@ -47,9 +47,8 @@ body{display:flex;justify-content:center;align-items:flex-start}
 .dot-t:nth-child(2){animation-delay:.2s}
 .dot-t:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,80%,100%{opacity:.3;transform:scale(1)}40%{opacity:1;transform:scale(1.2)}}
-.choice-area{background:rgba(178,199,217,.6);padding:8px 10px;flex-shrink:0;border-top:.5px solid rgba(0,0,0,.1)}
-.choice-area-inner{display:flex;flex-direction:column;gap:6px}
-.choice-btn{background:#fff;border:none;border-radius:20px;padding:11px 16px;font-size:14px;color:#222;cursor:pointer;text-align:left;line-height:1.45;font-family:'Noto Sans KR',sans-serif;transition:background .15s;width:100%}
+.choice-inline{padding:4px 0 6px 43px;display:flex;flex-direction:column;gap:7px;margin-bottom:2px}
+.choice-btn{background:#fff;border:none;border-radius:20px;padding:11px 16px;font-size:14px;color:#222;cursor:pointer;text-align:left;line-height:1.45;font-family:'Noto Sans KR',sans-serif;transition:background .15s;width:100%;max-width:82%}
 .choice-btn:active{background:#f0f0f0}
 .choice-btn.picked{background:#FEE500;color:#111}
 .nyang-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:100;padding:1.25rem}
@@ -132,9 +131,7 @@ body{display:flex;justify-content:center;align-items:flex-start}
   <div class="date-divider"><span>오늘</span></div>
 </div>
 
-<div class="choice-area" id="choice-area" style="display:none">
-  <div class="choice-area-inner" id="choice-inner"></div>
-</div>
+
 
 <div class="nyang-overlay" id="nyang-overlay" style="display:none">
   <div class="nyang-box" id="nyang-box">
@@ -186,38 +183,32 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 function scrollToBottom(){
   const ca=document.getElementById('chat-area');
   ca.scrollTop=ca.scrollHeight;
-  // 선택지 버튼 포함해서 전체 phone div 기준으로도 스크롤
-  setTimeout(()=>{ca.scrollTop=ca.scrollHeight;},50);
-}
-function scrollLastMsgIntoView(){
-  const ca=document.getElementById('chat-area');
-  const last=ca.lastElementChild;
-  if(last) last.scrollIntoView({behavior:'smooth',block:'end'});
+  setTimeout(()=>{ca.scrollTop=ca.scrollHeight;},80);
 }
 function addCatMsg(text){
   const ca=document.getElementById('chat-area'),t=getTime();
   const row=document.createElement('div');row.className='msg-row-cat';
   row.innerHTML=`<div class="cat-profile">${catSVGsmall()}</div><div class="cat-msg-col"><div class="cat-name">예언냥</div><div class="cat-bubble-row"><div class="bubble-cat">${text.split('\n').join('<br>')}</div><div class="msg-time">${t}</div></div></div>`;
   ca.appendChild(row);
-  setTimeout(()=>scrollToBottom(),30);
+  scrollToBottom();
 }
 function addUserMsg(text){
   const ca=document.getElementById('chat-area'),t=getTime();
   const row=document.createElement('div');row.className='msg-row-user';
   row.innerHTML=`<div class="msg-time">${t}</div><div class="bubble-user">${text}</div>`;
   ca.appendChild(row);
-  setTimeout(()=>scrollToBottom(),30);
+  scrollToBottom();
 }
 function showTyping(){
   const ca=document.getElementById('chat-area');
   const row=document.createElement('div');row.className='typing-row-cat';row.id='typing-r';
   row.innerHTML=`<div class="cat-profile">${catSVGsmall()}</div><div class="typing-bubble"><div class="dot-t"></div><div class="dot-t"></div><div class="dot-t"></div></div>`;
   ca.appendChild(row);
-  setTimeout(()=>scrollToBottom(),30);
+  scrollToBottom();
 }
 function removeTyping(){const t=document.getElementById('typing-r');if(t)t.remove();}
 async function runQ(idx){
-  document.getElementById('choice-area').style.display='none';
+  const ic=document.getElementById('inline-choices');if(ic)ic.remove();
   document.getElementById('prog').style.width=((idx/QS.length)*100)+'%';
   const q=QS[idx];
   for(let i=0;i<q.cat.length;i++){
@@ -228,18 +219,24 @@ async function runQ(idx){
   await sleep(300);showChoices(idx,q);
 }
 function showChoices(idx,q){
-  const ci=document.getElementById('choice-inner');ci.innerHTML='';
+  const ca=document.getElementById('chat-area');
+  // 기존 선택지 제거
+  const old=document.getElementById('inline-choices');
+  if(old)old.remove();
+  // 채팅창 안에 선택지 삽입
+  const wrap=document.createElement('div');
+  wrap.className='choice-inline';wrap.id='inline-choices';
   q.choices.forEach((c,i)=>{
     const b=document.createElement('button');b.className='choice-btn';b.textContent=c;
-    b.onclick=()=>pick(idx,i,c,b);ci.appendChild(b);
+    b.onclick=()=>pick(idx,i,c,b);wrap.appendChild(b);
   });
-  document.getElementById('choice-area').style.display='block';
+  ca.appendChild(wrap);
   setTimeout(()=>scrollToBottom(),60);
 }
 async function pick(idx,i,text,btn){
   document.querySelectorAll('.choice-btn').forEach(b=>{b.disabled=true;b.style.opacity='.5'});
   btn.style.opacity='1';btn.classList.add('picked');
-  document.getElementById('choice-area').style.display='none';
+  const ic=document.getElementById('inline-choices');if(ic)ic.remove();
   const s=QS[idx].scores[i];Object.keys(s).forEach(k=>scores[k]=(scores[k]||0)+s[k]);
   addUserMsg(text);qIdx=idx+1;
   if(qIdx<QS.length)await sleep(500),runQ(qIdx);
@@ -287,7 +284,7 @@ function showResult(){
 function restart(){
   scores={C:0,S:0,K:0,A:0,F:0,T:0};qIdx=0;
   document.getElementById('chat-area').innerHTML='<div class="date-divider"><span>오늘</span></div>';
-  document.getElementById('choice-area').style.display='none';
+  const ic=document.getElementById('inline-choices');if(ic)ic.remove();
   document.getElementById('nyang-input').value='';
   document.getElementById('nyang-hint').textContent='';
   document.getElementById('result-view').classList.remove('show');
