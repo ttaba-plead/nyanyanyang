@@ -8,10 +8,11 @@
 <meta property="og:description" content="고양이가 10년 뒤 내 통장 잔고를 봤다...😐 나는 어떤 집사 유형?">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#B2C7D9;font-family:'Noto Sans KR',sans-serif}
+body.no-scroll{overflow:hidden;position:fixed;width:100%;}
 body{display:flex;justify-content:center;align-items:flex-start}
 .phone{width:100%;max-width:480px;min-height:100vh;min-height:100dvh;background:#B2C7D9;display:flex;flex-direction:column;position:relative;overflow:hidden}
 .status-bar{background:rgba(0,0,0,.12);padding:6px 16px 4px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
@@ -63,41 +64,179 @@ body{display:flex;justify-content:center;align-items:flex-start}
 .nyang-hint{font-size:12px;color:#e74c3c;margin-top:.5rem;min-height:1.2em}
 .shake{animation:shake .35s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}60%{transform:translateX(7px)}80%{transform:translateX(-4px)}}
-.result-view{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;bottom:0;background:#FAFAFA;overflow-y:auto;display:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.result-view{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;bottom:0;background:#F9FAFB;overflow-y:auto;display:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .result-view::-webkit-scrollbar{display:none}
 .result-view.show{display:block}
-.rv-header{background:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:.5px solid #eee;position:sticky;top:0;z-index:10}
-.rv-header-title{font-size:13px;color:#888}
-.rv-close{font-size:20px;color:#555;cursor:pointer;background:none;border:none;font-family:'Noto Sans KR',sans-serif}
-.rv-body{padding:0 0 2rem}
-.rv-hero{padding:2rem 1.5rem 1.5rem;text-align:center;background:#fff;margin-bottom:8px}
-.rv-avatar{width:90px;height:90px;border-radius:50%;background:#f0f0f0;border:2px solid #eee;display:flex;align-items:center;justify-content:center;margin:0 auto .875rem}
-.rv-sub{font-size:12px;color:#999;margin-bottom:.25rem}
-.rv-name{font-size:22px;font-weight:700;color:#111;margin-bottom:.2rem}
-.rv-eng{font-size:13px;color:#aaa}
-.rv-section{background:#fff;margin-bottom:8px;padding:1.25rem 1.5rem}
-.rv-sec-label{font-size:11px;font-weight:700;color:#aaa;letter-spacing:.06em;margin-bottom:.6rem}
-.rv-sec-body{font-size:14px;color:#333;line-height:1.75}
-.rv-prophecy{background:#FFF9C4;margin-bottom:8px;padding:1.25rem 1.5rem;border-left:3px solid #FEE500}
-.rv-tips{background:#fff;margin-bottom:8px;padding:1.25rem 1.5rem}
-.rv-tip-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:.5px solid #f0f0f0;font-size:14px;color:#333;line-height:1.6}
-.rv-tip-row:last-child{border-bottom:none}
-.rv-tip-dot{width:5px;height:5px;border-radius:50%;background:#ccc;flex-shrink:0;margin-top:8px}
-.rv-partner{background:#fff;margin-bottom:8px;padding:1.25rem 1.5rem}
-.rv-partner-inner{display:flex;align-items:center;gap:12px;margin-top:.5rem}
-.rv-partner-av{width:46px;height:46px;border-radius:50%;background:#f0f0f0;border:.5px solid #eee;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.rv-partner-name{font-size:14px;font-weight:500;color:#111;margin-bottom:.15rem}
-.rv-partner-desc{font-size:12px;color:#aaa}
-.rv-cta{padding:1rem 1.5rem 1.5rem;background:#fff;margin-bottom:8px}
-.rv-cta-btn{display:block;width:100%;background:#FEE500;color:#111;border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:700;text-align:center;text-decoration:none;font-family:'Noto Sans KR',sans-serif;cursor:pointer;margin-bottom:10px}
+.rv-header{background:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E5E8EB;position:sticky;top:0;z-index:10}
+.rv-header-title{font-size:12px;color:#888;font-weight:500;letter-spacing:.03em}
+.rv-close{font-size:20px;color:#424242;cursor:pointer;background:none;border:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;line-height:1;padding:0}
+.rv-body{padding:0 0 3rem;background:#F9FAFB}
+
+/* 히어로 카드 */
+.rv-hero{background:#fff;border-bottom:1px solid #E5E8EB;padding:32px 24px 28px;text-align:center}
+.rv-avatar{width:84px;height:84px;border-radius:50%;background:#EFF6FF;border:1px solid #E5E8EB;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.rv-type-tag{display:inline-flex;align-items:center;gap:4px;background:#EFF6FF;color:#2F5FD2;font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;margin-bottom:10px;letter-spacing:.04em}
+.rv-sub{font-size:13px;color:#888;margin-bottom:4px;font-weight:400}
+.rv-name{font-size:26px;font-weight:700;color:#111;margin-bottom:6px;line-height:1.25}
+.rv-eng{font-size:12px;color:#aaa;font-weight:400}
+
+/* 공통 섹션 */
+.rv-section{margin:16px 16px 0;background:#fff;border:1px solid #E5E8EB;border-radius:14px;overflow:hidden}
+.rv-section-header{padding:16px 20px 12px;border-bottom:1px solid #F0F2F5;display:flex;align-items:center;gap:8px}
+.rv-section-icon{font-size:17px;line-height:1}
+.rv-section-title{font-size:14px;font-weight:700;color:#111;letter-spacing:.01em}
+.rv-section-body{padding:16px 20px}
+
+/* 예언 섹션 */
+.rv-prophecy-section{margin:16px 16px 0;background:#fff;border:1px solid #E5E8EB;border-radius:14px;overflow:hidden}
+.rv-prophecy-header{padding:16px 20px 12px;border-bottom:1px solid #F0F2F5;display:flex;align-items:center;gap:8px;background:#111}
+.rv-prophecy-header .rv-section-title{color:#fff}
+.rv-prophecy-body{padding:16px 20px;font-size:14px;color:#1C1C1C;line-height:1.7;font-weight:500}
+
+/* 진단 섹션 */
+.rv-diag-body{padding:16px 20px;background:#F5F7FA;font-size:14px;color:#424242;line-height:1.75;font-weight:400}
+
+/* 치트키 섹션 */
+.rv-cheat-section{margin:12px 16px 0;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:14px;overflow:hidden}
+.rv-cheat-header{padding:16px 20px 12px;border-bottom:1px solid #BFDBFE;display:flex;align-items:center;gap:8px}
+.rv-cheat-title{font-size:14px;font-weight:700;color:#1D4ED8;letter-spacing:.01em}
+.rv-cheat-body{padding:12px 20px 16px}
+.rv-tip-row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #DBEAFE;font-size:14px;color:#1e3a8a;line-height:1.65;font-weight:400}
+.rv-tip-row:last-child{border-bottom:none;padding-bottom:0}
+.rv-tip-dot{color:#2F5FD2;font-size:15px;flex-shrink:0;margin-top:2px;font-weight:700}
+
+/* 능력치 */
+.rv-stat-wrap{display:flex;flex-direction:column;gap:12px}
+.rv-stat-item{}
+.rv-stat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.rv-stat-label{font-size:12px;font-weight:600;color:#555}
+.rv-stat-score{font-size:11px;font-weight:700;color:#2F5FD2}
+.rv-stat-track{height:6px;background:#F0F2F5;border-radius:99px;overflow:hidden}
+.rv-stat-fill{height:100%;background:#2F5FD2;border-radius:99px;transition:width .7s cubic-bezier(.4,0,.2,1)}
+
+/* 짝꿍 */
+.rv-partner-wrap{margin:12px 16px 0;display:flex;gap:10px}
+.rv-partner-card{flex:1;background:#fff;border:1px solid #E5E8EB;border-radius:12px;padding:16px 12px;text-align:center}
+.rv-partner-label{font-size:10px;font-weight:700;color:#2F5FD2;margin-bottom:8px;letter-spacing:.04em;text-transform:uppercase}
+.rv-partner-av{width:40px;height:40px;border-radius:50%;background:#F5F7FA;border:1px solid #E5E8EB;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.rv-partner-name{font-size:12px;font-weight:700;color:#111;line-height:1.4}
+.rv-partner-desc{font-size:11px;color:#888;margin-top:4px;font-weight:400}
+
+/* CTA */
+.rv-cta{padding:20px 16px 0}
+.rv-cta-btn{display:block;width:100%;background:#2F5FD2;color:#fff;border:none;border-radius:10px;padding:15px;font-size:15px;font-weight:700;text-align:center;text-decoration:none;font-family:'Noto Sans KR',sans-serif;cursor:pointer;margin-bottom:10px;letter-spacing:.02em}
+.rv-cta-btn:active{opacity:.88}
 .rv-share-row{display:flex;gap:8px}
-.rv-share-btn{flex:1;background:#f5f5f5;border:none;border-radius:10px;padding:11px 6px;font-size:13px;color:#555;cursor:pointer;text-align:center;line-height:1.4;font-family:'Noto Sans KR',sans-serif}
+.rv-share-btn{flex:1;background:#fff;border:1px solid #E5E8EB;border-radius:10px;padding:13px 8px;font-size:13px;color:#1C1C1C;cursor:pointer;text-align:center;line-height:1.45;font-family:'Noto Sans KR',sans-serif;font-weight:500}
+.rv-share-btn:active{background:#F9FAFB}
 .prog-wrap{height:2px;background:rgba(0,0,0,.1);flex-shrink:0}
 .prog-fill{height:2px;background:#FEE500;transition:width .4s ease}
+
+/* ── INTRO 잠금화면 ── */
+.intro-screen{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:100%;height:100dvh;background:linear-gradient(160deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;z-index:200;overflow:hidden;}
+.intro-screen.hide{animation:fadeOut .4s ease forwards}
+@keyframes fadeOut{to{opacity:0;pointer-events:none}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* 잠금화면 상단 */
+.intro-lock-top{padding:36px 0 20px;text-align:center;width:100%}
+.intro-lock-time{font-size:52px;font-weight:200;color:#fff;letter-spacing:-1px;line-height:1.1}
+.intro-lock-date{font-size:14px;color:rgba(255,255,255,.7);margin-top:4px}
+
+/* 알림 카드 */
+.intro-notif{width:calc(100% - 32px);margin:0 16px;background:rgba(255,255,255,.18);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:16px;padding:14px 16px;border:1px solid rgba(255,255,255,.2)}
+.intro-notif-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.intro-notif-icon{width:24px;height:24px;border-radius:6px;background:#FEE500;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.intro-notif-app{font-size:12px;color:rgba(255,255,255,.8);font-weight:500;flex:1}
+.intro-notif-time{font-size:11px;color:rgba(255,255,255,.6)}
+.intro-notif-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.intro-notif-body{font-size:13px;color:rgba(255,255,255,.85);line-height:1.5}
+
+/* 답장 버튼 영역 */
+.intro-reply-area{width:calc(100% - 32px);margin:10px 16px 0}
+.intro-reply-hint{font-size:11px;color:rgba(255,255,255,.5);text-align:center;margin-bottom:8px}
+.intro-reply-btns{display:flex;flex-direction:column;gap:8px}
+.intro-reply-btn{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);border-radius:22px;padding:13px 20px;font-size:14px;color:#fff;cursor:pointer;text-align:left;font-family:'Noto Sans KR',sans-serif;transition:all .15s;width:100%}
+.intro-reply-btn:active{background:rgba(255,255,255,.3)}
+.intro-reply-btn span{font-size:16px;margin-right:8px}
+
+/* 하단 홈 인디케이터 */
+.intro-bottom{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:120px;height:5px;background:rgba(255,255,255,.3);border-radius:3px}
 </style>
 </head>
 <body>
 <div class="phone" id="phone">
+
+<!-- INTRO 잠금화면 -->
+<div class="intro-screen" id="intro-screen">
+  <div class="intro-lock-top">
+    <div class="intro-lock-time" id="intro-time">오후 4:20</div>
+    <div class="intro-lock-date" id="intro-date">2025년 3월 25일 화요일</div>
+  </div>
+
+  <!-- 1단계 알림 -->
+  <div class="intro-notif" id="intro-step1">
+    <div class="intro-notif-header">
+      <div class="intro-notif-icon">🐱</div>
+      <div class="intro-notif-app">길에서 데려온 주인님</div>
+      <div class="intro-notif-time">지금</div>
+    </div>
+    <div class="intro-notif-title">예언냥</div>
+    <div class="intro-notif-body">야 집사야. 내가 낮잠 자다가 네 미래 통장 잔고를 봤는데... 솔직히 말하면 좀 충격적이었냥 😐</div>
+    <div class="intro-reply-area" style="margin:10px 0 0">
+      <div class="intro-reply-hint">▲ 답장하기</div>
+      <div class="intro-reply-btns">
+        <button class="intro-reply-btn" onclick="introStep2()">
+          <span>😮</span>헐 진짜? 뭔데?
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2단계 알림 (처음엔 숨김) -->
+  <div class="intro-notif" id="intro-step2" style="display:none;margin-top:10px">
+    <div class="intro-notif-header">
+      <div class="intro-notif-icon">🐱</div>
+      <div class="intro-notif-app">길에서 데려온 주인님</div>
+      <div class="intro-notif-time">지금</div>
+    </div>
+    <div class="intro-notif-title">예언냥</div>
+    <div class="intro-notif-body">10년 뒤 네 통장이 어떻게 될지, 위기 탈출 비법까지 알려줄게. 단, 집사 검증 먼저다냥.</div>
+    <div class="intro-reply-area" style="margin:10px 0 0">
+      <div class="intro-reply-hint">▲ 답장하기</div>
+      <div class="intro-reply-btns">
+        <button class="intro-reply-btn" id="step2-yes" onclick="startChat()">
+          <span>🙏</span>뭐 어떻게 되는데? 알려줘!
+        </button>
+        <button class="intro-reply-btn" id="step2-no" onclick="introStep3()">
+          <span>😪</span>지금은 좀 귀찮은데...
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3단계 알림 (처음엔 숨김) -->
+  <div class="intro-notif" id="intro-step3" style="display:none;margin-top:10px">
+    <div class="intro-notif-header">
+      <div class="intro-notif-icon">🐱</div>
+      <div class="intro-notif-app">길에서 데려온 주인님</div>
+      <div class="intro-notif-time">지금</div>
+    </div>
+    <div class="intro-notif-title">예언냥</div>
+    <div class="intro-notif-body">캭!!! 오늘부터 갓생 살기로 했잖냥!</div>
+    <div class="intro-reply-area" style="margin:10px 0 0">
+      <div class="intro-reply-hint">▲ 답장하기</div>
+      <div class="intro-reply-btns">
+        <button class="intro-reply-btn" onclick="startChatMsg('알겠어... 그럼 얼른 해보자.')">
+          <span>😅</span>알겠어... 그럼 얼른 해보자.
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="intro-bottom"></div>
+</div>
+
 <svg style="display:none">
   <symbol id="cat-base" viewBox="0 0 60 60"><circle cx="30" cy="32" r="22" fill="none" stroke="#333" stroke-width="1.8"/><path d="M12 22 L16 30 L20 22Z" fill="#333"/><path d="M40 22 L44 30 L48 22Z" fill="#333"/><line x1="16" y1="38" x2="9" y2="36" stroke="#333" stroke-width="1.3"/><line x1="16" y1="41" x2="9" y2="41" stroke="#333" stroke-width="1.3"/><line x1="44" y1="38" x2="51" y2="36" stroke="#333" stroke-width="1.3"/><line x1="44" y1="41" x2="51" y2="41" stroke="#333" stroke-width="1.3"/></symbol>
   <symbol id="cat-cool" viewBox="0 0 60 60"><use href="#cat-base"/><rect x="17" y="29" width="26" height="7" rx="3.5" fill="#333"/><circle cx="23" cy="32.5" r="2.2" fill="#fff"/><circle cx="37" cy="32.5" r="2.2" fill="#fff"/><path d="M24 42 Q30 47 36 42" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></symbol>
@@ -290,16 +429,92 @@ function calcType(){
 function showResult(){
   document.getElementById('prog').style.width='100%';
   const t=TYPES[calcType()];
-  const tipsHtml=t.tips.map(tp=>`<div class="rv-tip-row"><div class="rv-tip-dot"></div><div>${tp}</div></div>`).join('');
+  const sc=scores;
+
+  // 능력치 막대
+  const statMax={S:4,K:2,A:3,F:3,T:4,C:4};
+  const statLabel={S:'저축 성향',K:'금융 지식',A:'문제 해결력',F:'회피 성향',T:'타인 의존도',C:'소비 성향'};
+  const statBars=Object.keys(statMax).map(k=>{
+    const val=sc[k]||0;
+    const pct=Math.round(val/statMax[k]*100);
+    return `<div class="rv-stat-item">
+      <div class="rv-stat-header">
+        <span class="rv-stat-label">${statLabel[k]}</span>
+        <span class="rv-stat-score">${val} / ${statMax[k]}</span>
+      </div>
+      <div class="rv-stat-track">
+        <div class="rv-stat-fill" style="width:${pct}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const tipsHtml=t.tips.map(tp=>`<div class="rv-tip-row"><div class="rv-tip-dot">•</div><div>${tp}</div></div>`).join('');
+
   document.getElementById('rv-body').innerHTML=`
-    <div class="rv-hero"><div class="rv-avatar"><svg width="80" height="80" viewBox="0 0 60 60"><use href="#${t.sym}"/></svg></div><div class="rv-sub">${t.subType}</div><div class="rv-name">"${t.name}"</div><div class="rv-eng">${t.eng}</div></div>
-    <div class="rv-section"><div class="rv-sec-label">냥이의 진단</div><div class="rv-sec-body">${t.diag.split('\n').join('<br>')}</div></div>
-    <div class="rv-prophecy"><div class="rv-sec-label">🔮 이대로면? 10년 뒤 예언</div><div class="rv-sec-body">${t.prophecy}</div></div>
-    <div class="rv-tips"><div class="rv-sec-label">비밀 치트키 (히든 루트)</div>${tipsHtml}</div>
-    <div class="rv-partner"><div class="rv-sec-label">💖 환상의 짝꿍</div><div class="rv-partner-inner"><div class="rv-partner-av"><svg width="36" height="36" viewBox="0 0 60 60"><use href="#${t.partnerSym}"/></svg></div><div><div class="rv-partner-name">${t.partnerName}</div><div class="rv-partner-desc">${t.partnerDesc}</div></div></div></div>
-    <div class="rv-cta"><a class="rv-cta-btn" href="${DDOK_URL}" target="_blank">고양이가 말한 히든 루트 진짜로 확인하기 ↗</a><div class="rv-share-row"><button class="rv-share-btn" onclick="if(navigator.share){navigator.share({title:'숨겨진 부자 본능 테스트',text:'나는 ${t.name} 나왔어! 너는?',url:window.location.href})}">친구한테<br>냐냐냥 시키러 가기</button><button class="rv-share-btn" onclick="restart()">테스트<br>다시 하기</button></div></div>`;
+    <div class="rv-hero">
+      <div class="rv-avatar"><svg width="66" height="66" viewBox="0 0 60 60"><use href="#${t.sym}"/></svg></div>
+      <div class="rv-type-tag">🐱 예언냥 판정 완료</div>
+      <div class="rv-sub">${t.subType}</div>
+      <div class="rv-name">"${t.name}"</div>
+      <div class="rv-eng">${t.eng}</div>
+    </div>
+
+    <div class="rv-prophecy-section">
+      <div class="rv-prophecy-header">
+        <span class="rv-section-icon">🔮</span>
+        <span class="rv-section-title">이대로면? 10년 뒤 예언</span>
+      </div>
+      <div class="rv-prophecy-body">${t.prophecy}</div>
+    </div>
+
+    <div class="rv-section">
+      <div class="rv-section-header">
+        <span class="rv-section-icon">😺</span>
+        <span class="rv-section-title">냥이의 진단</span>
+      </div>
+      <div class="rv-diag-body">${t.diag.split('\n').join('<br>')}</div>
+    </div>
+
+    <div class="rv-section">
+      <div class="rv-section-header">
+        <span class="rv-section-icon">📊</span>
+        <span class="rv-section-title">집사 능력치 분석</span>
+      </div>
+      <div class="rv-section-body">
+        <div class="rv-stat-wrap">${statBars}</div>
+      </div>
+    </div>
+
+    <div class="rv-cheat-section">
+      <div class="rv-cheat-header">
+        <span class="rv-section-icon">💡</span>
+        <span class="rv-cheat-title">비밀 치트키 (히든 루트)</span>
+      </div>
+      <div class="rv-cheat-body">${tipsHtml}</div>
+    </div>
+
+    <div class="rv-partner-wrap">
+      <div class="rv-partner-card">
+        <div class="rv-partner-label">💖 환상의 짝꿍</div>
+        <div class="rv-partner-av"><svg width="30" height="30" viewBox="0 0 60 60"><use href="#${t.partnerSym}"/></svg></div>
+        <div class="rv-partner-name">${t.partnerName}</div>
+        <div class="rv-partner-desc">${t.partnerDesc}</div>
+      </div>
+    </div>
+
+    <div class="rv-cta">
+      <a class="rv-cta-btn" href="${DDOK_URL}" target="_blank">고양이가 말한 히든 루트 확인하기 ↗</a>
+      <div class="rv-share-row">
+        <button class="rv-share-btn" onclick="if(navigator.share){navigator.share({title:'숨겨진 부자 본능 테스트',text:'나는 &quot;${t.name}&quot; 나왔어! 너는?',url:window.location.href})}else{alert('링크를 복사해서 공유해줘!');}">친구한테 냐냐냥 시키러 가기</button>
+        <button class="rv-share-btn" onclick="restart()">다시 하기</button>
+      </div>
+    </div>
+
+    <div style="height:1px;margin:0 16px"></div>`;
+
   document.getElementById('result-view').classList.add('show');
   document.getElementById('result-view').scrollTop=0;
+  document.body.classList.add('no-scroll');
 }
 function restart(){
   scores={C:0,S:0,K:0,A:0,F:0,T:0};qIdx=0;
@@ -308,10 +523,67 @@ function restart(){
   document.getElementById('nyang-input').value='';
   document.getElementById('nyang-hint').textContent='';
   document.getElementById('result-view').classList.remove('show');
+  document.body.classList.remove('no-scroll');
   document.getElementById('prog').style.width='0%';
   setTimeout(()=>runQ(0),400);
 }
-runQ(0);
+
+// 인트로 시계
+function updateIntroTime(){
+  const d=new Date();
+  let h=d.getHours(),m=d.getMinutes(),ap=h>=12?'오후':'오전';
+  h=h%12||12;
+  const timeStr=`${ap} ${h}:${String(m).padStart(2,'0')}`;
+  const el=document.getElementById('intro-time');
+  if(el)el.textContent=timeStr;
+  const days=['일','월','화','수','목','금','토'];
+  const dateStr=`${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
+  const del=document.getElementById('intro-date');
+  if(del)del.textContent=dateStr;
+}
+updateIntroTime();
+setInterval(updateIntroTime,30000);
+
+function introStep2(){
+  const btn=document.querySelector('#intro-step1 .intro-reply-btn');
+  if(btn){btn.disabled=true;btn.style.background='rgba(254,229,0,.3)';btn.style.color='#fff';}
+  setTimeout(()=>{
+    const s2=document.getElementById('intro-step2');
+    s2.style.display='block';
+    s2.style.animation='fadeInUp .3s ease';
+  },400);
+}
+
+function introStep3(){
+  // 2단계 버튼 비활성화
+  document.querySelectorAll('#intro-step2 .intro-reply-btn').forEach(b=>{
+    b.disabled=true;b.style.opacity='.5';
+  });
+  const no=document.getElementById('step2-no');
+  if(no){no.style.background='rgba(254,229,0,.3)';no.style.opacity='1';}
+  setTimeout(()=>{
+    const s3=document.getElementById('intro-step3');
+    s3.style.display='block';
+    s3.style.animation='fadeInUp .3s ease';
+    // 3단계 카드가 보이도록 스크롤
+    setTimeout(()=>s3.scrollIntoView({behavior:'smooth',block:'end'}),100);
+  },400);
+}
+
+function startChat(){
+  startChatMsg('뭐 어떻게 되는데? 알려줘!');
+}
+
+function startChatMsg(msg){
+  const intro=document.getElementById('intro-screen');
+  intro.classList.add('hide');
+  setTimeout(()=>{intro.style.display='none';},400);
+  setTimeout(()=>{
+    addUserMsg(msg);
+    setTimeout(()=>runQ(0),600);
+  },300);
+}
+// runQ는 startChat에서 호출됨
 </script>
 </body>
 </html>
